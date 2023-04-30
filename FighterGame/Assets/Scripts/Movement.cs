@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour {
     
+    public bool canMove = true;
+
+    [Header("Variables")]
     [SerializeField] private float speed = 10.0f;
     [SerializeField] private float jumpHeight = 2.0f;
 
@@ -18,7 +21,7 @@ public class Movement : MonoBehaviour {
     Vector2 force;
 
     private void Start() {
-        
+
         if (rb) return;
         rb = GetComponent<Rigidbody>();
 
@@ -30,6 +33,8 @@ public class Movement : MonoBehaviour {
 
     }
     private void Update() {
+
+        if (!canMove) return;
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         
