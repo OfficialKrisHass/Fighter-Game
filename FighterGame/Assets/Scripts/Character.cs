@@ -33,8 +33,6 @@ public class Character : MonoBehaviour {
 
         }
 
-        if(Input.GetKeyDown(KeyCode.X)) KnockOut();
-
     }
 
     public void Hit() {
@@ -60,6 +58,7 @@ public class Character : MonoBehaviour {
     private void Die() {
 
         alive = false;
+        movement.canMove = false;
 
     }
 
