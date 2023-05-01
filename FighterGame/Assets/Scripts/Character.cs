@@ -24,6 +24,10 @@ public class Character : MonoBehaviour {
     [Header("Script Instances")]
     [SerializeField] private Movement movement;
 
+    [Header("Attacking")]
+    [SerializeField] private float damage = 20.0f;
+    [SerializeField] private Enemy enemyInFront;
+
     private void Update() {
         
         if(knockedOut && DateTime.Now >= previousKnockOut.AddSeconds(knockOutDuration)) {
@@ -32,6 +36,9 @@ public class Character : MonoBehaviour {
             movement.canMove = true;
 
         }
+
+        if(enemyInFront && Input.GetKeyDown(KeyCode.X))
+            enemyInFront.Hit(damage);
 
     }
 
@@ -59,6 +66,19 @@ public class Character : MonoBehaviour {
 
         alive = false;
         movement.canMove = false;
+
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        
+        if (other.tag != "Enemy") return;
+        enemyInFront = other.GetComponent<Enemy>();
+
+    }
+    private void OnTriggerExit(Collider other) {
+        
+        if (other.tag != "Enemy") return;
+        enemyInFront = null;
 
     }
 
