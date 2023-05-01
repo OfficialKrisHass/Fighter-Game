@@ -34,11 +34,18 @@ public class Movement : MonoBehaviour {
     }
     private void Update() {
 
+        float x = Input.GetAxisRaw("Horizontal");
+        float yRot = transform.rotation.eulerAngles.y;
+        if(x > 0.0f) yRot = 180.0f;
+        else if(x < 0.0f) yRot = 0.0f;
+
+        transform.rotation = Quaternion.Euler(0.0f, yRot, 0.0f);
+
         if (!canMove) return;
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         
-        force.x = Input.GetAxisRaw("Horizontal") * speed;
+        force.x = x * speed;
         if(Input.GetKeyDown(KeyCode.Space) && isGrounded) {
             
             rb.velocity = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z);
